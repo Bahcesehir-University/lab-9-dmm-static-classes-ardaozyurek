@@ -141,7 +141,7 @@ Tracker::objectCreated();
 IntArray::~IntArray() {
     // TODO 7: Free the dynamic array using 'delete[]'
     //         Notify Tracker that an object was destroyed
-delete[]data;
+delete[] data;
 data=nullptr;
 Tracker::objectDestroyed();
 }
@@ -157,9 +157,7 @@ IntArray::IntArray(const IntArray& other) {
     for(int i=0;i<count;i++){
         data[i]=other.data[i];
     }
-    
     Tracker::objectCreated();
-
 }
 
 // Copy Assignment Operator
@@ -172,9 +170,11 @@ IntArray& IntArray::operator=(const IntArray& other) {
     //         5. Return *this
     //         NOTE: Do NOT call Tracker here (object already exists)
     if(this!=&other){
-        delete[]data;
+        delete[] data;
+        
         capacity=other.capacity;
         count=other.count;
+        
         data=new int [capacity];
         for(int i=0;i<count;i++){
             data[i]=other.data[i];
@@ -191,6 +191,7 @@ bool IntArray::add(int value) {
     //          increment count, return true.
     //          Otherwise return false.
     if(count<capacity){
+        data[count]=value;
         count++;
         return true;
     }
@@ -202,7 +203,7 @@ bool IntArray::add(int value) {
 int IntArray::get(int index) const {
     // TODO 11: If index is valid (0 <= index < count), return data[index].
     //          Otherwise return -1.
-    if(0<=index<count){
+    if(index>=0 && index<count){
         return data[index];
     }
     return -1;
@@ -223,7 +224,7 @@ int IntArray::getCapacity() const {
 // isEmpty
 bool IntArray::isEmpty() const {
     // TODO 14: Return true if count == 0
-    return count==0;
+    return count == 0;
  }
 
 
